@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Private Search Engine</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            padding: 24px 16px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 680px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 {
+            font-size: 26px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 6px;
+        }
+
+        .header p {
+            color: #94a3b8;
+            font-size: 13px;
+        }
+
+        .search-box {
+            display: flex;
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 9999px;
+            padding: 6px 8px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+            margin-bottom: 24px;
+        }
+
+        .search-box input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #ffffff;
+            font-size: 15px;
+            padding: 8px 14px;
+        }
+
+        .search-box button {
+            background: #38bdf8;
+            color: #0f172a;
+            border: none;
+            outline: none;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 8px 20px;
+            border-radius: 9999px;
+            cursor: pointer;
+        }
+
+        /* AI Overview Card Styling */
+        .ai-card {
+            background: linear-gradient(180deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95));
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 20px rgba(56, 189, 248, 0.1);
+        }
+
+        .ai-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #38bdf8;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .ai-title svg {
+            width: 18px;
+            height: 18px;
+            fill: #38bdf8;
+        }
+
+        .ai-summary {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #e2e8f0;
+            margin-bottom: 14px;
+        }
+
+        .ai-highlights {
+            border-top: 1px solid #334155;
+            padding-top: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .ai-bullet {
+            font-size: 13px;
+            color: #94a3b8;
+            line-height: 1.5;
+            padding-left: 12px;
+            position: relative;
+        }
+
+        .ai-bullet::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #38bdf8;
+            font-weight: bold;
+        }
+
+        /* Normal Search Results */
+        .meta-summary {
+            font-size: 13px;
+            color: #94a3b8;
+            margin-bottom: 16px;
+            border-left: 3px solid #38bdf8;
+            padding-left: 8px;
+        }
+
+        .result-item {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 14px;
+        }
+
+        .result-item h3 a {
+            color: #38bdf8;
+            text-decoration: none;
+            font-size: 17px;
+            font-weight: 600;
+        }
+
+        .result-item h3 a:hover {
+            text-decoration: underline;
+        }
+
+        .result-url {
+            color: #64748b;
+            font-size: 12px;
+            margin: 4px 0 8px 0;
+            word-break: break-all;
+        }
+
+        .result-snippet {
+            color: #cbd5e1;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .state-box {
+            text-align: center;
+            padding: 28px 14px;
+            color: #94a3b8;
+            background: #1e293b;
+            border-radius: 12px;
+            border: 1px dashed #334155;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>Private Search</h1>
+            <p>আপনার সংরক্ষিত তথ্যের দ্রুত এবং ব্যক্তিগত সার্চ ইঞ্জিন</p>
+        </div>
+
+        <form id="searchForm" class="search-box">
+            <input 
+                type="text" 
+                id="searchInput" 
+                placeholder="এখানে কোনো শব্দ লিখে খুঁজুন..." 
+                autocomplete="off" 
+                required
+            >
+            <button type="submit">Search</button>
+        </form>
+
+        <div id="displayArea"></div>
+    </div>
+
+    <script>
+        const searchForm = document.getElementById("searchForm");
+        const searchInput = document.getElementById("searchInput");
+        const displayArea = document.getElementById("displayArea");
+
+        // Your connected Cloudflare Worker backend
+        const BACKEND_URL = "https://my-search-engine.gpallab726.workers.dev";
+
+        searchForm.addEventListener("submit", async function(event) {
+            event.preventDefault();
+            const query = searchInput.value.trim();
+            if (!query) return;
+
+            displayArea.innerHTML = `
+                <div class="state-box">
+                    অনুসন্ধান ও AI Overview তৈরি করা হচ্ছে...
+                </div>
+            `;
+
+            try {
+                const response = await fetch(`${BACKEND_URL}/?q=${encodeURIComponent(query)}`);
+                const data = await response.json();
+                renderAll(query, data);
+            } catch (error) {
+                displayArea.innerHTML = `
+                    <div class="state-box" style="color: #f87171; border-color: #ef4444;">
+                        ব্যাকএন্ডের সাথে সংযোগ স্থাপন করা যায়নি।
+                    </div>
+                `;
+            }
+        });
+
+        function renderAll(query, data) {
+            displayArea.innerHTML = "";
+
+            if (!data.results || data.results.length === 0) {
+                displayArea.innerHTML = `
+                    <div class="state-box">
+                        "${query}" সম্পর্কিত কোনো তথ্য ব্যাকএন্ডে সংরক্ষিত নেই।
+                    </div>
+                `;
+                return;
+            }
+
+            let content = "";
+
+            // Render AI Overview if generated by Cloudflare
+            if (data.aiOverview) {
+                content += `
+                    <div class="ai-card">
+                        <div class="ai-title">
+                            <svg viewBox="0 0 24 24"><path d="M12 2L14.4 7.6L20 10L14.4 12.4L12 18L9.6 12.4L4 10L9.6 7.6L12 2Z"/></svg>
+                            AI Overview
+                        </div>
+                        <div class="ai-summary">${data.aiOverview.summary}</div>
+                        <div class="ai-highlights">
+                            ${data.aiOverview.highlights.map(item => `<div class="ai-bullet">${item}</div>`).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Results Counter
+            content += `
+                <div class="meta-summary">
+                    "${query}" এর জন্য ${data.results.length} টি ফলাফল পাওয়া গেছে
+                </div>
+            `;
+
+            // Regular Results List
+            data.results.forEach(item => {
+                content += `
+                    <div class="result-item">
+                        <h3><a href="${item.url}" target="_blank">${item.title}</a></h3>
+                        <div class="result-url">${item.url}</div>
+                        <p class="result-snippet">${item.snippet}</p>
+                    </div>
+                `;
+            });
+
+            displayArea.innerHTML = content;
+        }
+    </script>
+</body>
+</html>
