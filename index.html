@@ -3,16 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google</title>
+    <title>Zenixa Search</title>
     <style>
-        /* Google Theme Variables */
         :root[data-theme="light"] {
             --bg: #ffffff;
             --text-main: #202124;
             --text-sub: #5f6368;
             --search-bg: #ffffff;
             --search-border: #dfe1e5;
-            --search-hover-shadow: 0 1px 6px rgba(32,33,36,.28);
+            --search-hover-shadow: 0 2px 8px rgba(32,33,36,.18);
             --link-color: #1a0dab;
             --url-color: #202124;
             --snippet-color: #4d5156;
@@ -24,26 +23,30 @@
             --btn-bg: #f8f9fa;
             --btn-border: #f8f9fa;
             --btn-text: #3c4043;
+            --chip-bg: #f1f3f4;
+            --chip-border: #dadce0;
         }
 
         :root[data-theme="dark"] {
-            --bg: #202124;
-            --text-main: #e8eaed;
-            --text-sub: #9aa0a6;
-            --search-bg: #202124;
-            --search-border: #5f6368;
-            --search-hover-shadow: 0 1px 6px rgba(0,0,0,.5);
+            --bg: #171717;
+            --text-main: #f1f5f9;
+            --text-sub: #94a3b8;
+            --search-bg: #212121;
+            --search-border: #383838;
+            --search-hover-shadow: 0 4px 14px rgba(0,0,0,.45);
             --link-color: #8ab4f8;
             --url-color: #dadce0;
-            --snippet-color: #bdc1c6;
-            --ai-card-bg: #303134;
-            --ai-card-border: #3c4043;
+            --snippet-color: #cbd5e1;
+            --ai-card-bg: #232323;
+            --ai-card-border: #333333;
             --ai-gradient-bar: linear-gradient(90deg, #8ab4f8, #f28b82, #fdd663, #81c995);
-            --theme-btn-bg: #303134;
+            --theme-btn-bg: #282828;
             --theme-btn-color: #e8eaed;
-            --btn-bg: #303134;
-            --btn-border: #303134;
+            --btn-bg: #282828;
+            --btn-border: #383838;
             --btn-text: #e8eaed;
+            --chip-bg: #242424;
+            --chip-border: #333333;
         }
 
         * {
@@ -62,12 +65,12 @@
             transition: background 0.2s, color 0.2s;
         }
 
-        /* Top Bar */
+        /* Top Navigation */
         .top-nav {
             display: flex;
             justify-content: flex-end;
             align-items: center;
-            padding: 16px 24px;
+            padding: 18px 24px;
             gap: 16px;
         }
 
@@ -76,18 +79,18 @@
             color: var(--theme-btn-color);
             border: 1px solid var(--search-border);
             border-radius: 20px;
-            padding: 6px 14px;
+            padding: 7px 15px;
             font-size: 13px;
             font-weight: 500;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 7px;
             outline: none;
-            transition: background 0.2s;
+            transition: all 0.2s;
         }
 
-        /* Views Layout */
+        /* Home Page Layout */
         body.home-layout {
             justify-content: space-between;
         }
@@ -96,8 +99,9 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: 10vh;
-            padding: 0 16px;
+            justify-content: center;
+            margin: auto 0;
+            padding: 0 16px 60px 16px;
             width: 100%;
         }
 
@@ -105,42 +109,46 @@
             display: none;
         }
 
-        /* Google Logo */
-        .google-logo {
-            font-size: 78px;
-            font-weight: 600;
-            letter-spacing: -2.5px;
-            margin-bottom: 26px;
+        /* Zenixa Logo Branding */
+        .zenixa-brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 28px;
             user-select: none;
         }
 
-        .g-blue { color: #4285f4; }
-        .g-red { color: #ea4335; }
-        .g-yellow { color: #fbbc05; }
-        .g-green { color: #34a853; }
-
-        /* Search Form (Home) */
-        .home-search-form {
-            width: 100%;
-            max-width: 584px;
+        .zenixa-brand h1 {
+            font-size: 68px;
+            font-weight: 800;
+            letter-spacing: -2px;
+            background: linear-gradient(135deg, #38bdf8 10%, #818cf8 50%, #c084fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .search-input-box {
+        .home-search-form {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .search-box {
             display: flex;
             align-items: center;
             background: var(--search-bg);
-            border: 1px solid var(--search-border);
-            border-radius: 24px;
-            padding: 10px 16px;
+            border: 1.5px solid var(--search-border);
+            border-radius: 28px;
+            padding: 12px 18px;
             width: 100%;
-            box-shadow: none;
-            transition: box-shadow 0.2s, border-color 0.2s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+            transition: box-shadow 0.25s, border-color 0.25s;
         }
 
-        .search-input-box:hover,
-        .search-input-box:focus-within {
+        .search-box:hover,
+        .search-box:focus-within {
             box-shadow: var(--search-hover-shadow);
-            border-color: transparent;
+            border-color: #38bdf8;
         }
 
         .search-icon-svg {
@@ -163,29 +171,58 @@
         .home-button-group {
             display: flex;
             gap: 12px;
-            margin-top: 28px;
+            margin-top: 26px;
         }
 
         .home-btn {
             background: var(--btn-bg);
             border: 1px solid var(--btn-border);
             color: var(--btn-text);
-            padding: 9px 16px;
+            padding: 10px 20px;
             font-size: 14px;
-            border-radius: 4px;
+            font-weight: 500;
+            border-radius: 8px;
             cursor: pointer;
+            transition: all 0.2s;
             outline: none;
         }
 
         .home-btn:hover {
-            box-shadow: 0 1px 2px rgba(0,0,0,.15);
+            border-color: #38bdf8;
+            transform: translateY(-1px);
         }
 
-        /* Results Header Bar */
+        /* Quick Discovery Chips */
+        .quick-chips {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 28px;
+            max-width: 580px;
+        }
+
+        .chip {
+            background: var(--chip-bg);
+            border: 1px solid var(--chip-border);
+            color: var(--text-sub);
+            font-size: 13px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .chip:hover {
+            color: var(--text-main);
+            border-color: #38bdf8;
+        }
+
+        /* Results Layout */
         .results-top-bar {
             display: none;
             align-items: center;
-            padding: 18px 24px;
+            padding: 16px 24px;
             border-bottom: 1px solid var(--search-border);
             gap: 24px;
             width: 100%;
@@ -195,25 +232,36 @@
             display: flex;
         }
 
-        .mini-logo {
-            font-size: 28px;
-            font-weight: 600;
+        .mini-brand {
+            font-size: 26px;
+            font-weight: 800;
             letter-spacing: -1px;
             text-decoration: none;
+            background: linear-gradient(135deg, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             cursor: pointer;
             user-select: none;
         }
 
         .results-search-form {
             flex: 1;
-            max-width: 692px;
+            max-width: 680px;
         }
 
-        /* Results Area */
+        .results-search-box {
+            display: flex;
+            align-items: center;
+            background: var(--search-bg);
+            border: 1px solid var(--search-border);
+            border-radius: 24px;
+            padding: 8px 16px;
+        }
+
         .results-content {
             display: none;
             width: 100%;
-            max-width: 652px;
+            max-width: 680px;
             padding: 20px 24px 60px 24px;
             margin-left: 0;
         }
@@ -229,12 +277,12 @@
         }
 
         .results-stats {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--text-sub);
-            margin-bottom: 24px;
+            margin-bottom: 22px;
         }
 
-        /* Google AI Overview Card */
+        /* AI Overview Card */
         .ai-overview-card {
             background: var(--ai-card-bg);
             border: 1px solid var(--ai-card-border);
@@ -268,7 +316,7 @@
         .ai-sparkle-icon {
             width: 18px;
             height: 18px;
-            fill: #4285f4;
+            fill: #38bdf8;
         }
 
         .ai-summary {
@@ -299,7 +347,7 @@
             content: "•";
             position: absolute;
             left: 0;
-            color: #4285f4;
+            color: #38bdf8;
             font-size: 18px;
             line-height: 1;
         }
@@ -315,7 +363,7 @@
 
         /* Result Cards */
         .result-entry {
-            margin-bottom: 28px;
+            margin-bottom: 26px;
         }
 
         .result-site-row {
@@ -328,7 +376,7 @@
         .result-site-name {
             font-size: 14px;
             color: var(--url-color);
-            font-weight: 400;
+            font-weight: 500;
         }
 
         .result-url {
@@ -376,33 +424,39 @@
         </button>
     </div>
 
-    <!-- Home Layout -->
+    <!-- Home Page -->
     <main class="home-main">
-        <div class="google-logo">
-            <span class="g-blue">G</span><span class="g-red">o</span><span class="g-yellow">o</span><span class="g-blue">g</span><span class="g-green">l</span><span class="g-red">e</span>
+        <div class="zenixa-brand">
+            <h1>Zenixa</h1>
         </div>
 
         <form id="homeSearchForm" class="home-search-form">
-            <div class="search-input-box">
+            <div class="search-box">
                 <svg class="search-icon-svg" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-                <input type="text" id="homeSearchInput" class="main-input" placeholder="Search Google or type a URL" autocomplete="off" required>
+                <input type="text" id="homeSearchInput" class="main-input" placeholder="Search resources or ask a question..." autocomplete="off" required>
             </div>
             <div style="display: flex; justify-content: center;">
                 <div class="home-button-group">
-                    <button type="submit" class="home-btn">Google Search</button>
-                    <button type="button" id="luckyBtn" class="home-btn">I'm Feeling Lucky</button>
+                    <button type="submit" class="home-btn">Zenixa Search</button>
+                    <button type="button" id="identityBtn" class="home-btn">Who are you?</button>
                 </div>
             </div>
         </form>
+
+        <!-- Quick Discovery Suggestions -->
+        <div class="quick-chips">
+            <span class="chip" onclick="quickQuery('Who is Pallab Ghosh?')">Who is Pallab Ghosh?</span>
+            <span class="chip" onclick="quickQuery('zenix-pallab github')">GitHub Repositories</span>
+            <span class="chip" onclick="quickQuery('Python Docs')">Python Docs</span>
+            <span class="chip" onclick="quickQuery('MDN Web Docs')">MDN Web Docs</span>
+        </div>
     </main>
 
     <!-- Results Top Bar -->
     <header class="results-top-bar">
-        <a href="/" id="logoHomeLink" class="mini-logo">
-            <span class="g-blue">G</span><span class="g-red">o</span><span class="g-yellow">o</span><span class="g-blue">g</span><span class="g-green">l</span><span class="g-red">e</span>
-        </a>
+        <a href="/" id="logoHomeLink" class="mini-brand">Zenixa</a>
         <form id="resultsSearchForm" class="results-search-form">
-            <div class="search-input-box">
+            <div class="results-search-box">
                 <input type="text" id="resultsSearchInput" class="main-input" autocomplete="off" required>
                 <svg class="search-icon-svg" style="margin-right: 0;" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
             </div>
@@ -415,7 +469,7 @@
     <script>
         const BACKEND_URL = "https://my-search-engine.gpallab726.workers.dev";
 
-        // Theme Toggle Logic
+        // Theme Toggle
         const rootElement = document.documentElement;
         const themeToggleBtn = document.getElementById("themeToggleBtn");
         const themeIcon = document.getElementById("themeIcon");
@@ -423,7 +477,7 @@
 
         function switchTheme(theme) {
             rootElement.setAttribute("data-theme", theme);
-            localStorage.setItem("zenix_theme", theme);
+            localStorage.setItem("zenixa_theme", theme);
             if (theme === "light") {
                 themeIcon.textContent = "🌙";
                 themeLabel.textContent = "Dark Mode";
@@ -433,7 +487,7 @@
             }
         }
 
-        const savedTheme = localStorage.getItem("zenix_theme") || "dark";
+        const savedTheme = localStorage.getItem("zenixa_theme") || "dark";
         switchTheme(savedTheme);
 
         themeToggleBtn.addEventListener("click", () => {
@@ -448,7 +502,7 @@
         const resultsSearchInput = document.getElementById("resultsSearchInput");
         const resultsContainer = document.getElementById("resultsContainer");
         const logoHomeLink = document.getElementById("logoHomeLink");
-        const luckyBtn = document.getElementById("luckyBtn");
+        const identityBtn = document.getElementById("identityBtn");
 
         function resetToHome() {
             document.body.className = "home-layout";
@@ -463,10 +517,14 @@
             resetToHome();
         });
 
-        luckyBtn.addEventListener("click", () => {
-            homeSearchInput.value = "Who are you?";
-            executeSearch("Who are you?");
+        identityBtn.addEventListener("click", () => {
+            quickQuery("Who are you?");
         });
+
+        function quickQuery(text) {
+            homeSearchInput.value = text;
+            executeSearch(text);
+        }
 
         homeSearchForm.addEventListener("submit", (e) => {
             e.preventDefault();
@@ -487,7 +545,7 @@
 
             resultsContainer.innerHTML = `
                 <div class="status-box">
-                    Generative AI is creating an overview for <b>${query}</b>...
+                    Synthesizing AI Overview for <b>${query}</b>...
                 </div>
             `;
 
@@ -524,7 +582,6 @@
 
             let html = "";
 
-            // Google AI Overview Box
             if (data.aiOverview) {
                 html += `
                     <div class="ai-overview-card">
@@ -542,10 +599,8 @@
                 `;
             }
 
-            // Results count
             html += `<div class="results-stats">About ${data.results.length} result(s)</div>`;
 
-            // Google Search Results
             data.results.forEach(item => {
                 let displayDomain = item.url;
                 try {
