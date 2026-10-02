@@ -11,20 +11,20 @@
             --text-sub: #5f6368;
             --search-bg: #ffffff;
             --search-border: #dfe1e5;
-            --search-hover-shadow: 0 2px 8px rgba(32,33,36,.18);
+            --search-shadow: 0 1px 6px rgba(32,33,36,.28);
             --link-color: #1a0dab;
             --url-color: #202124;
             --snippet-color: #4d5156;
             --ai-card-bg: #f8fafd;
             --ai-card-border: #d2e3fc;
             --ai-gradient-bar: linear-gradient(90deg, #4285f4, #ea4335, #fbbc05, #34a853);
-            --theme-btn-bg: #f1f3f4;
-            --theme-btn-color: #3c4043;
+            --tab-active-color: #1a73e8;
+            --tab-border: #1a73e8;
             --btn-bg: #f8f9fa;
             --btn-border: #f8f9fa;
             --btn-text: #3c4043;
-            --chip-bg: #f1f3f4;
-            --chip-border: #dadce0;
+            --card-surface: #ffffff;
+            --media-border: #e2e8f0;
         }
 
         :root[data-theme="dark"] {
@@ -33,20 +33,20 @@
             --text-sub: #94a3b8;
             --search-bg: #212121;
             --search-border: #383838;
-            --search-hover-shadow: 0 4px 14px rgba(0,0,0,.45);
+            --search-shadow: 0 4px 14px rgba(0,0,0,.5);
             --link-color: #8ab4f8;
             --url-color: #dadce0;
-            --snippet-color: #cbd5e1;
+            --snippet-color: #bdc1c6;
             --ai-card-bg: #232323;
             --ai-card-border: #333333;
             --ai-gradient-bar: linear-gradient(90deg, #8ab4f8, #f28b82, #fdd663, #81c995);
-            --theme-btn-bg: #282828;
-            --theme-btn-color: #e8eaed;
-            --btn-bg: #282828;
+            --tab-active-color: #8ab4f8;
+            --tab-border: #8ab4f8;
+            --btn-bg: #262626;
             --btn-border: #383838;
             --btn-text: #e8eaed;
-            --chip-bg: #242424;
-            --chip-border: #333333;
+            --card-surface: #202020;
+            --media-border: #333333;
         }
 
         * {
@@ -65,32 +65,25 @@
             transition: background 0.2s, color 0.2s;
         }
 
-        /* Top Navigation */
+        /* Top Bar */
         .top-nav {
             display: flex;
             justify-content: flex-end;
-            align-items: center;
-            padding: 18px 24px;
-            gap: 16px;
+            padding: 16px 24px;
         }
 
-        .theme-toggle-btn {
-            background: var(--theme-btn-bg);
-            color: var(--theme-btn-color);
+        .theme-btn {
+            background: var(--btn-bg);
+            color: var(--text-main);
             border: 1px solid var(--search-border);
             border-radius: 20px;
-            padding: 7px 15px;
+            padding: 6px 14px;
             font-size: 13px;
-            font-weight: 500;
             cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
             outline: none;
-            transition: all 0.2s;
         }
 
-        /* Home Page Layout */
+        /* Home View */
         body.home-layout {
             justify-content: space-between;
         }
@@ -99,9 +92,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
             margin: auto 0;
-            padding: 0 16px 60px 16px;
+            padding: 0 16px 80px 16px;
             width: 100%;
         }
 
@@ -109,49 +101,40 @@
             display: none;
         }
 
-        /* Zenixa Logo Branding */
-        .zenixa-brand {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            margin-bottom: 28px;
-            user-select: none;
-        }
-
-        .zenixa-brand h1 {
+        .brand-title {
             font-size: 68px;
             font-weight: 800;
             letter-spacing: -2px;
             background: linear-gradient(135deg, #38bdf8 10%, #818cf8 50%, #c084fc 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            margin-bottom: 26px;
+            user-select: none;
         }
 
         .home-search-form {
             width: 100%;
-            max-width: 600px;
+            max-width: 584px;
         }
 
         .search-box {
             display: flex;
             align-items: center;
             background: var(--search-bg);
-            border: 1.5px solid var(--search-border);
-            border-radius: 28px;
-            padding: 12px 18px;
+            border: 1px solid var(--search-border);
+            border-radius: 26px;
+            padding: 11px 18px;
             width: 100%;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-            transition: box-shadow 0.25s, border-color 0.25s;
+            transition: box-shadow 0.2s, border-color 0.2s;
         }
 
         .search-box:hover,
         .search-box:focus-within {
-            box-shadow: var(--search-hover-shadow);
+            box-shadow: var(--search-shadow);
             border-color: #38bdf8;
         }
 
-        .search-icon-svg {
+        .search-icon {
             width: 20px;
             height: 20px;
             fill: var(--text-sub);
@@ -159,7 +142,7 @@
             flex-shrink: 0;
         }
 
-        .main-input {
+        .search-input {
             flex: 1;
             background: transparent;
             border: none;
@@ -168,80 +151,51 @@
             color: var(--text-main);
         }
 
-        .home-button-group {
+        .home-btns {
             display: flex;
             gap: 12px;
             margin-top: 26px;
+            justify-content: center;
         }
 
-        .home-btn {
+        .h-btn {
             background: var(--btn-bg);
             border: 1px solid var(--btn-border);
             color: var(--btn-text);
-            padding: 10px 20px;
+            padding: 9px 18px;
             font-size: 14px;
-            font-weight: 500;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
-            transition: all 0.2s;
             outline: none;
         }
 
-        .home-btn:hover {
-            border-color: #38bdf8;
-            transform: translateY(-1px);
-        }
-
-        /* Quick Discovery Chips */
-        .quick-chips {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 28px;
-            max-width: 580px;
-        }
-
-        .chip {
-            background: var(--chip-bg);
-            border: 1px solid var(--chip-border);
-            color: var(--text-sub);
-            font-size: 13px;
-            padding: 6px 14px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .chip:hover {
-            color: var(--text-main);
-            border-color: #38bdf8;
-        }
-
-        /* Results Layout */
-        .results-top-bar {
+        /* Results Header */
+        .results-header {
             display: none;
-            align-items: center;
-            padding: 16px 24px;
+            flex-direction: column;
             border-bottom: 1px solid var(--search-border);
-            gap: 24px;
             width: 100%;
         }
 
-        body.results-layout .results-top-bar {
+        body.results-layout .results-header {
             display: flex;
+        }
+
+        .results-top-row {
+            display: flex;
+            align-items: center;
+            padding: 16px 24px;
+            gap: 20px;
         }
 
         .mini-brand {
             font-size: 26px;
             font-weight: 800;
-            letter-spacing: -1px;
-            text-decoration: none;
             background: linear-gradient(135deg, #38bdf8, #818cf8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-decoration: none;
             cursor: pointer;
-            user-select: none;
         }
 
         .results-search-form {
@@ -249,16 +203,42 @@
             max-width: 680px;
         }
 
-        .results-search-box {
+        /* Google Category Tabs (All, Images, Videos, News) */
+        .category-tabs {
             display: flex;
-            align-items: center;
-            background: var(--search-bg);
-            border: 1px solid var(--search-border);
-            border-radius: 24px;
-            padding: 8px 16px;
+            gap: 24px;
+            padding: 0 24px;
+            overflow-x: auto;
+            scrollbar-width: none;
         }
 
-        .results-content {
+        @media (min-width: 820px) {
+            .category-tabs {
+                margin-left: 120px;
+            }
+        }
+
+        .tab-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 0;
+            font-size: 14px;
+            color: var(--text-sub);
+            text-decoration: none;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .tab-item.active {
+            color: var(--tab-active-color);
+            border-bottom-color: var(--tab-border);
+        }
+
+        /* Results Display */
+        .results-container {
             display: none;
             width: 100%;
             max-width: 680px;
@@ -267,12 +247,12 @@
         }
 
         @media (min-width: 820px) {
-            .results-content {
-                margin-left: 140px;
+            .results-container {
+                margin-left: 144px;
             }
         }
 
-        body.results-layout .results-content {
+        body.results-layout .results-container {
             display: block;
         }
 
@@ -286,9 +266,9 @@
         .ai-overview-card {
             background: var(--ai-card-bg);
             border: 1px solid var(--ai-card-border);
-            border-radius: 20px;
+            border-radius: 18px;
             padding: 20px;
-            margin-bottom: 28px;
+            margin-bottom: 26px;
             position: relative;
             overflow: hidden;
         }
@@ -304,277 +284,313 @@
         }
 
         .ai-badge {
-            display: inline-flex;
+            display: flex;
             align-items: center;
             gap: 8px;
             font-size: 14px;
             font-weight: 600;
-            color: var(--text-main);
-            margin-bottom: 14px;
-        }
-
-        .ai-sparkle-icon {
-            width: 18px;
-            height: 18px;
-            fill: #38bdf8;
+            margin-bottom: 12px;
+            color: #38bdf8;
         }
 
         .ai-summary {
             font-size: 15px;
-            line-height: 1.62;
-            color: var(--text-main);
-            margin-bottom: 16px;
+            line-height: 1.6;
+            margin-bottom: 14px;
         }
 
-        .ai-highlights-list {
+        .ai-bullets {
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
             border-top: 1px solid var(--search-border);
-            padding-top: 14px;
+            padding-top: 12px;
         }
 
-        .ai-highlights-list li {
-            font-size: 14px;
-            line-height: 1.55;
+        .ai-bullets li {
+            font-size: 13px;
+            line-height: 1.5;
             color: var(--snippet-color);
-            padding-left: 16px;
+            padding-left: 14px;
             position: relative;
         }
 
-        .ai-highlights-list li::before {
+        .ai-bullets li::before {
             content: "•";
             position: absolute;
             left: 0;
             color: #38bdf8;
-            font-size: 18px;
-            line-height: 1;
+            font-weight: bold;
         }
 
-        .ai-highlights-list a {
+        .ai-bullets a {
             color: var(--link-color);
             text-decoration: none;
         }
 
-        .ai-highlights-list a:hover {
-            text-decoration: underline;
-        }
-
-        /* Result Cards */
-        .result-entry {
+        /* Web Results */
+        .web-entry {
             margin-bottom: 26px;
         }
 
-        .result-site-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 4px;
-        }
-
-        .result-site-name {
+        .web-site-name {
             font-size: 14px;
             color: var(--url-color);
-            font-weight: 500;
+            margin-bottom: 2px;
         }
 
-        .result-url {
+        .web-url {
             font-size: 12px;
             color: var(--text-sub);
             word-break: break-all;
+            margin-bottom: 4px;
         }
 
-        .result-heading {
-            font-size: 20px;
+        .web-heading {
+            font-size: 19px;
             font-weight: 400;
-            line-height: 1.3;
         }
 
-        .result-heading a {
+        .web-heading a {
             color: var(--link-color);
             text-decoration: none;
         }
 
-        .result-heading a:hover {
+        .web-heading a:hover {
             text-decoration: underline;
         }
 
-        .result-snippet {
+        .web-snippet {
             font-size: 14px;
-            line-height: 1.58;
+            line-height: 1.55;
             color: var(--snippet-color);
             margin-top: 5px;
         }
 
-        .status-box {
-            font-size: 15px;
+        /* Image Grid View */
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        .image-card {
+            background: var(--card-surface);
+            border: 1px solid var(--media-border);
+            border-radius: 12px;
+            overflow: hidden;
+            text-decoration: none;
+            color: var(--text-main);
+            transition: transform 0.2s;
+        }
+
+        .image-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .image-card img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .image-card-title {
+            font-size: 13px;
+            padding: 10px;
+            line-height: 1.4;
+            color: var(--text-main);
+        }
+
+        /* Video List View */
+        .video-entry {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 22px;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .video-thumb {
+            width: 130px;
+            height: 80px;
+            background: #2a2a2a;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            flex-shrink: 0;
+            color: #ffffff;
+            font-size: 11px;
+        }
+
+        .video-duration {
+            position: absolute;
+            bottom: 6px;
+            right: 6px;
+            background: rgba(0,0,0,0.8);
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
+
+        /* News View */
+        .news-entry {
+            margin-bottom: 22px;
+            border-bottom: 1px solid var(--search-border);
+            padding-bottom: 16px;
+        }
+
+        .news-meta {
+            font-size: 12px;
             color: var(--text-sub);
-            padding: 30px 0;
+            margin-bottom: 4px;
+        }
+
+        .state-box {
+            text-align: center;
+            padding: 36px 16px;
+            color: var(--text-sub);
+            font-size: 14px;
         }
     </style>
 </head>
 <body class="home-layout">
 
-    <!-- Top Bar with Theme Toggle -->
     <div class="top-nav">
-        <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="Toggle Theme">
-            <span id="themeIcon">☀️</span>
-            <span id="themeLabel">Light Mode</span>
-        </button>
+        <button id="themeToggleBtn" class="theme-btn">☀️ Light Mode</button>
     </div>
 
     <!-- Home Page -->
     <main class="home-main">
-        <div class="zenixa-brand">
-            <h1>Zenixa</h1>
-        </div>
-
-        <form id="homeSearchForm" class="home-search-form">
+        <div class="brand-title">Zenixa</div>
+        <form id="homeForm" class="home-search-form">
             <div class="search-box">
-                <svg class="search-icon-svg" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-                <input type="text" id="homeSearchInput" class="main-input" placeholder="Search resources or ask a question..." autocomplete="off" required>
+                <svg class="search-icon" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                <input type="text" id="homeInput" class="search-input" placeholder="Search the web or ask anything..." autocomplete="off" required>
             </div>
-            <div style="display: flex; justify-content: center;">
-                <div class="home-button-group">
-                    <button type="submit" class="home-btn">Zenixa Search</button>
-                    <button type="button" id="identityBtn" class="home-btn">Who are you?</button>
-                </div>
+            <div class="home-btns">
+                <button type="submit" class="h-btn">Zenixa Search</button>
+                <button type="button" id="whoBtn" class="h-btn">Who are you?</button>
             </div>
         </form>
-
-        <!-- Quick Discovery Suggestions -->
-        <div class="quick-chips">
-            <span class="chip" onclick="quickQuery('Who is Pallab Ghosh?')">Who is Pallab Ghosh?</span>
-            <span class="chip" onclick="quickQuery('zenix-pallab github')">GitHub Repositories</span>
-            <span class="chip" onclick="quickQuery('Python Docs')">Python Docs</span>
-            <span class="chip" onclick="quickQuery('MDN Web Docs')">MDN Web Docs</span>
-        </div>
     </main>
 
-    <!-- Results Top Bar -->
-    <header class="results-top-bar">
-        <a href="/" id="logoHomeLink" class="mini-brand">Zenixa</a>
-        <form id="resultsSearchForm" class="results-search-form">
-            <div class="results-search-box">
-                <input type="text" id="resultsSearchInput" class="main-input" autocomplete="off" required>
-                <svg class="search-icon-svg" style="margin-right: 0;" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-            </div>
-        </form>
+    <!-- Results Header -->
+    <header class="results-header">
+        <div class="results-top-row">
+            <a href="/" id="logoHome" class="mini-brand">Zenixa</a>
+            <form id="resultsForm" class="results-search-form">
+                <div class="search-box" style="padding: 8px 16px;">
+                    <input type="text" id="resultsInput" class="search-input" autocomplete="off" required>
+                    <svg class="search-icon" style="margin-right: 0;" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                </div>
+            </form>
+        </div>
+
+        <!-- Google Categories Tabs -->
+        <div class="category-tabs">
+            <div class="tab-item active" data-tab="all">All</div>
+            <div class="tab-item" data-tab="images">Images</div>
+            <div class="tab-item" data-tab="videos">Videos</div>
+            <div class="tab-item" data-tab="news">News</div>
+        </div>
     </header>
 
-    <!-- Results Content Section -->
-    <section class="results-content" id="resultsContainer"></section>
+    <!-- Results Body -->
+    <section class="results-container" id="resultsArea"></section>
 
     <script>
         const BACKEND_URL = "https://my-search-engine.gpallab726.workers.dev";
+        let currentTab = "all";
+        let activeQuery = "";
 
-        // Theme Toggle
-        const rootElement = document.documentElement;
-        const themeToggleBtn = document.getElementById("themeToggleBtn");
-        const themeIcon = document.getElementById("themeIcon");
-        const themeLabel = document.getElementById("themeLabel");
-
-        function switchTheme(theme) {
-            rootElement.setAttribute("data-theme", theme);
-            localStorage.setItem("zenixa_theme", theme);
-            if (theme === "light") {
-                themeIcon.textContent = "🌙";
-                themeLabel.textContent = "Dark Mode";
-            } else {
-                themeIcon.textContent = "☀️";
-                themeLabel.textContent = "Light Mode";
-            }
+        // Theme Toggle Logic
+        const themeBtn = document.getElementById("themeToggleBtn");
+        function setTheme(t) {
+            document.documentElement.setAttribute("data-theme", t);
+            localStorage.setItem("zenixa_theme", t);
+            themeBtn.textContent = (t === "light") ? "🌙 Dark Mode" : "☀️ Light Mode";
         }
-
-        const savedTheme = localStorage.getItem("zenixa_theme") || "dark";
-        switchTheme(savedTheme);
-
-        themeToggleBtn.addEventListener("click", () => {
-            const currentTheme = rootElement.getAttribute("data-theme");
-            switchTheme(currentTheme === "light" ? "dark" : "light");
+        setTheme(localStorage.getItem("zenixa_theme") || "dark");
+        themeBtn.addEventListener("click", () => {
+            const cur = document.documentElement.getAttribute("data-theme");
+            setTheme(cur === "light" ? "dark" : "light");
         });
 
-        // Search Handlers
-        const homeSearchForm = document.getElementById("homeSearchForm");
-        const homeSearchInput = document.getElementById("homeSearchInput");
-        const resultsSearchForm = document.getElementById("resultsSearchForm");
-        const resultsSearchInput = document.getElementById("resultsSearchInput");
-        const resultsContainer = document.getElementById("resultsContainer");
-        const logoHomeLink = document.getElementById("logoHomeLink");
-        const identityBtn = document.getElementById("identityBtn");
+        // Tabs Handler
+        document.querySelectorAll(".tab-item").forEach(tab => {
+            tab.addEventListener("click", () => {
+                document.querySelectorAll(".tab-item").forEach(t => t.classList.remove("active"));
+                tab.classList.add("active");
+                currentTab = tab.getAttribute("data-tab");
+                if (activeQuery) executeSearch(activeQuery, currentTab);
+            });
+        });
 
-        function resetToHome() {
+        const homeForm = document.getElementById("homeForm");
+        const homeInput = document.getElementById("homeInput");
+        const resultsForm = document.getElementById("resultsForm");
+        const resultsInput = document.getElementById("resultsInput");
+        const resultsArea = document.getElementById("resultsArea");
+        const logoHome = document.getElementById("logoHome");
+        const whoBtn = document.getElementById("whoBtn");
+
+        logoHome.addEventListener("click", (e) => {
+            e.preventDefault();
             document.body.className = "home-layout";
-            resultsContainer.innerHTML = "";
-            homeSearchInput.value = "";
-            resultsSearchInput.value = "";
-            window.scrollTo({ top: 0, behavior: "smooth" });
-        }
+            resultsArea.innerHTML = "";
+            homeInput.value = "";
+            resultsInput.value = "";
+            activeQuery = "";
+        });
 
-        logoHomeLink.addEventListener("click", (e) => {
+        whoBtn.addEventListener("click", () => {
+            homeInput.value = "Who are you?";
+            executeSearch("Who are you?", "all");
+        });
+
+        homeForm.addEventListener("submit", (e) => {
             e.preventDefault();
-            resetToHome();
+            executeSearch(homeInput.value.trim(), currentTab);
         });
 
-        identityBtn.addEventListener("click", () => {
-            quickQuery("Who are you?");
-        });
-
-        function quickQuery(text) {
-            homeSearchInput.value = text;
-            executeSearch(text);
-        }
-
-        homeSearchForm.addEventListener("submit", (e) => {
+        resultsForm.addEventListener("submit", (e) => {
             e.preventDefault();
-            const query = homeSearchInput.value.trim();
-            if (query) executeSearch(query);
+            executeSearch(resultsInput.value.trim(), currentTab);
         });
 
-        resultsSearchForm.addEventListener("submit", (e) => {
-            e.preventDefault();
-            const query = resultsSearchInput.value.trim();
-            if (query) executeSearch(query);
-        });
-
-        async function executeSearch(query) {
+        async function executeSearch(query, tab) {
+            if (!query) return;
+            activeQuery = query;
             document.body.className = "results-layout";
-            resultsSearchInput.value = query;
-            homeSearchInput.value = query;
+            homeInput.value = query;
+            resultsInput.value = query;
 
-            resultsContainer.innerHTML = `
-                <div class="status-box">
-                    Synthesizing AI Overview for <b>${query}</b>...
-                </div>
+            resultsArea.innerHTML = `
+                <div class="state-box">Searching edge index for <b>${query}</b> in <i>${tab}</i>...</div>
             `;
 
             try {
-                const response = await fetch(`${BACKEND_URL}/?q=${encodeURIComponent(query)}`);
-                const data = await response.json();
-                renderResults(query, data);
-            } catch (error) {
-                resultsContainer.innerHTML = `
-                    <div class="status-box" style="color: #ea4335;">
-                        Failed to connect to backend server. Please verify your connection.
-                    </div>
+                const res = await fetch(`${BACKEND_URL}/?q=${encodeURIComponent(query)}&tab=${tab}`);
+                const data = await res.json();
+                renderResults(query, data, tab);
+            } catch (err) {
+                resultsArea.innerHTML = `
+                    <div class="state-box" style="color: #ef4444;">Failed to connect to edge backend.</div>
                 `;
             }
         }
 
-        function renderResults(query, data) {
-            resultsContainer.innerHTML = "";
+        function renderResults(query, data, tab) {
+            resultsArea.innerHTML = "";
 
             if (!data.results || data.results.length === 0) {
-                resultsContainer.innerHTML = `
-                    <div class="status-box">
-                        Your search - <b>${query}</b> - did not match any documents.
-                        <br><br>
-                        Suggestions:
-                        <ul style="margin-left: 20px; margin-top: 8px; line-height: 1.6;">
-                            <li>Make sure that all words are spelled correctly.</li>
-                            <li>Try different keywords or query creator identity.</li>
-                        </ul>
+                resultsArea.innerHTML = `
+                    <div class="state-box">
+                        No ${tab} results found for "<b>${query}</b>".
                     </div>
                 `;
                 return;
@@ -582,17 +598,16 @@
 
             let html = "";
 
-            if (data.aiOverview) {
+            // 1. AI Overview Card (Shown in "All" view)
+            if (data.aiOverview && tab === "all") {
                 html += `
                     <div class="ai-overview-card">
                         <div class="ai-badge">
-                            <svg class="ai-sparkle-icon" viewBox="0 0 24 24">
-                                <path d="M12 2L14.4 7.6L20 10L14.4 12.4L12 18L9.6 12.4L4 10L9.6 7.6L12 2Z"/>
-                            </svg>
-                            AI Overview
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="#38bdf8"><path d="M12 2L14.4 7.6L20 10L14.4 12.4L12 18L9.6 12.4L4 10L9.6 7.6L12 2Z"/></svg>
+                            ${data.aiOverview.title}
                         </div>
                         <div class="ai-summary">${data.aiOverview.summary}</div>
-                        <ul class="ai-highlights-list">
+                        <ul class="ai-bullets">
                             ${data.aiOverview.highlights.map(item => `<li>${item}</li>`).join("")}
                         </ul>
                     </div>
@@ -601,27 +616,59 @@
 
             html += `<div class="results-stats">About ${data.results.length} result(s)</div>`;
 
-            data.results.forEach(item => {
-                let displayDomain = item.url;
-                try {
-                    displayDomain = new URL(item.url).hostname;
-                } catch(e) {}
-
-                html += `
-                    <div class="result-entry">
-                        <div class="result-site-row">
-                            <span class="result-site-name">${item.author || displayDomain}</span>
+            // 2. Views based on Active Tab
+            if (tab === "images") {
+                html += `<div class="image-grid">`;
+                data.results.forEach(item => {
+                    html += `
+                        <a href="${item.url}" target="_blank" class="image-card">
+                            <img src="${item.imageUrl}" alt="${item.title}">
+                            <div class="image-card-title">${item.title}</div>
+                        </a>
+                    `;
+                });
+                html += `</div>`;
+            } else if (tab === "videos") {
+                data.results.forEach(item => {
+                    html += `
+                        <a href="${item.url}" target="_blank" class="video-entry">
+                            <div class="video-thumb">
+                                ▶ Video
+                                <span class="video-duration">${item.duration || "Video"}</span>
+                            </div>
+                            <div>
+                                <h3 class="web-heading" style="color: var(--link-color);">${item.title}</h3>
+                                <div class="web-url">${item.displayUrl} • ${item.author}</div>
+                                <p class="web-snippet">${item.snippet}</p>
+                            </div>
+                        </a>
+                    `;
+                });
+            } else if (tab === "news") {
+                data.results.forEach(item => {
+                    html += `
+                        <div class="news-entry">
+                            <div class="news-meta">${item.author} • ${item.published}</div>
+                            <h3 class="web-heading"><a href="${item.url}" target="_blank">${item.title}</a></h3>
+                            <p class="web-snippet">${item.snippet}</p>
                         </div>
-                        <div class="result-url">${item.url}</div>
-                        <h3 class="result-heading">
-                            <a href="${item.url}" target="_blank" rel="noopener noreferrer">${item.title}</a>
-                        </h3>
-                        <p class="result-snippet">${item.snippet}</p>
-                    </div>
-                `;
-            });
+                    `;
+                });
+            } else {
+                // Default: All Web Results
+                data.results.forEach(item => {
+                    html += `
+                        <div class="web-entry">
+                            <div class="web-site-name">${item.author || "Web Source"}</div>
+                            <div class="web-url">${item.displayUrl || item.url}</div>
+                            <h3 class="web-heading"><a href="${item.url}" target="_blank">${item.title}</a></h3>
+                            <p class="web-snippet">${item.snippet}</p>
+                        </div>
+                    `;
+                });
+            }
 
-            resultsContainer.innerHTML = html;
+            resultsArea.innerHTML = html;
         }
     </script>
 </body>
