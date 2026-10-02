@@ -1,20 +1,33 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Private Search Engine</title>
+    <title>Zenix Search</title>
     <style>
+        :root {
+            --bg-color: #202124;
+            --surface-color: #303134;
+            --surface-hover: #3c4043;
+            --border-color: #5f6368;
+            --text-primary: #e8eaed;
+            --text-secondary: #9aa0a6;
+            --link-color: #8ab4f8;
+            --accent-purple: #c58af9;
+            --accent-blue: #8ab4f8;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
         }
 
         body {
-            background-color: #0f172a;
-            color: #f8fafc;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            min-height: 100vh;
             padding: 24px 16px;
             display: flex;
             justify-content: center;
@@ -30,159 +43,179 @@
             margin-bottom: 24px;
         }
 
-        .header h1 {
-            font-size: 26px;
+        .brand-title {
+            font-size: 32px;
             font-weight: 700;
-            background: linear-gradient(135deg, #38bdf8, #818cf8);
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #8ab4f8 0%, #c58af9 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
 
-        .header p {
-            color: #94a3b8;
+        .brand-subtitle {
             font-size: 13px;
+            color: var(--text-secondary);
         }
 
         .search-box {
             display: flex;
-            background: #1e293b;
-            border: 1px solid #334155;
-            border-radius: 9999px;
-            padding: 6px 8px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+            align-items: center;
+            background: var(--surface-color);
+            border: 1px solid transparent;
+            border-radius: 24px;
+            padding: 4px 6px;
             margin-bottom: 24px;
+            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+            transition: background 0.2s, box-shadow 0.2s;
         }
 
-        .search-box input {
+        .search-box:focus-within {
+            background: var(--surface-hover);
+            border-color: var(--border-color);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+        }
+
+        .search-input {
             flex: 1;
             background: transparent;
             border: none;
             outline: none;
-            color: #ffffff;
-            font-size: 15px;
-            padding: 8px 14px;
+            color: var(--text-primary);
+            font-size: 16px;
+            padding: 10px 16px;
         }
 
-        .search-box button {
-            background: #38bdf8;
-            color: #0f172a;
+        .search-button {
+            background: var(--accent-blue);
+            color: #202124;
             border: none;
-            outline: none;
+            border-radius: 20px;
+            padding: 9px 20px;
             font-size: 14px;
             font-weight: 600;
-            padding: 8px 20px;
-            border-radius: 9999px;
             cursor: pointer;
+            transition: opacity 0.2s;
         }
 
-        /* AI Overview Card Styling */
-        .ai-card {
-            background: linear-gradient(180deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95));
-            border: 1px solid rgba(56, 189, 248, 0.35);
-            border-radius: 16px;
-            padding: 18px;
+        .search-button:hover {
+            opacity: 0.9;
+        }
+
+        /* AI Overview Google-style Card */
+        .ai-overview-card {
+            background: #282a2d;
+            border: 1px solid #3c4043;
+            border-radius: 18px;
+            padding: 20px;
             margin-bottom: 24px;
-            box-shadow: 0 4px 20px rgba(56, 189, 248, 0.1);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+            position: relative;
+            overflow: hidden;
         }
 
-        .ai-title {
-            display: flex;
+        .ai-overview-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #4285f4, #ea4335, #fbbc05, #34a853);
+        }
+
+        .ai-badge {
+            display: inline-flex;
             align-items: center;
-            gap: 8px;
-            font-size: 14px;
-            font-weight: 700;
-            color: #38bdf8;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent-purple);
             margin-bottom: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
-        .ai-title svg {
-            width: 18px;
-            height: 18px;
-            fill: #38bdf8;
+        .ai-badge svg {
+            width: 16px;
+            height: 16px;
+            fill: var(--accent-purple);
         }
 
         .ai-summary {
-            font-size: 14px;
+            font-size: 15px;
             line-height: 1.6;
-            color: #e2e8f0;
+            color: var(--text-primary);
             margin-bottom: 14px;
         }
 
         .ai-highlights {
-            border-top: 1px solid #334155;
-            padding-top: 10px;
+            list-style: none;
             display: flex;
             flex-direction: column;
             gap: 8px;
+            border-top: 1px solid #3c4043;
+            padding-top: 12px;
         }
 
-        .ai-bullet {
+        .ai-highlights li {
             font-size: 13px;
-            color: #94a3b8;
+            color: #bdc1c6;
             line-height: 1.5;
-            padding-left: 12px;
+            padding-left: 14px;
             position: relative;
         }
 
-        .ai-bullet::before {
+        .ai-highlights li::before {
             content: "•";
             position: absolute;
             left: 0;
-            color: #38bdf8;
-            font-weight: bold;
+            color: var(--accent-blue);
+            font-size: 16px;
+            top: -2px;
         }
 
-        /* Normal Search Results */
-        .meta-summary {
+        /* Search Results List */
+        .results-meta {
             font-size: 13px;
-            color: #94a3b8;
+            color: var(--text-secondary);
             margin-bottom: 16px;
-            border-left: 3px solid #38bdf8;
-            padding-left: 8px;
         }
 
-        .result-item {
-            background: #1e293b;
-            border: 1px solid #334155;
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 14px;
+        .result-card {
+            margin-bottom: 22px;
         }
 
-        .result-item h3 a {
-            color: #38bdf8;
+        .result-link {
+            font-size: 18px;
+            color: var(--link-color);
             text-decoration: none;
-            font-size: 17px;
-            font-weight: 600;
+            display: inline-block;
+            line-height: 1.3;
         }
 
-        .result-item h3 a:hover {
+        .result-link:hover {
             text-decoration: underline;
         }
 
         .result-url {
-            color: #64748b;
             font-size: 12px;
-            margin: 4px 0 8px 0;
+            color: var(--text-secondary);
+            margin-top: 3px;
+            margin-bottom: 6px;
             word-break: break-all;
         }
 
         .result-snippet {
-            color: #cbd5e1;
-            font-size: 13px;
-            line-height: 1.6;
+            font-size: 14px;
+            color: #bdc1c6;
+            line-height: 1.55;
         }
 
-        .state-box {
+        .status-message {
             text-align: center;
-            padding: 28px 14px;
-            color: #94a3b8;
-            background: #1e293b;
+            padding: 32px 16px;
+            color: var(--text-secondary);
+            background: var(--surface-color);
             border-radius: 12px;
-            border: 1px dashed #334155;
             font-size: 14px;
         }
     </style>
@@ -191,30 +224,30 @@
 
     <div class="container">
         <div class="header">
-            <h1>Private Search</h1>
-            <p>আপনার সংরক্ষিত তথ্যের দ্রুত এবং ব্যক্তিগত সার্চ ইঞ্জিন</p>
+            <h1 class="brand-title">Zenix Search</h1>
+            <p class="brand-subtitle">Private and fast edge search engine</p>
         </div>
 
         <form id="searchForm" class="search-box">
             <input 
                 type="text" 
                 id="searchInput" 
-                placeholder="এখানে কোনো শব্দ লিখে খুঁজুন..." 
+                class="search-input" 
+                placeholder="Search resources, profiles, or ask a question..." 
                 autocomplete="off" 
                 required
             >
-            <button type="submit">Search</button>
+            <button type="submit" class="search-button">Search</button>
         </form>
 
-        <div id="displayArea"></div>
+        <div id="resultsArea"></div>
     </div>
 
     <script>
         const searchForm = document.getElementById("searchForm");
         const searchInput = document.getElementById("searchInput");
-        const displayArea = document.getElementById("displayArea");
+        const resultsArea = document.getElementById("resultsArea");
 
-        // Your connected Cloudflare Worker backend
         const BACKEND_URL = "https://my-search-engine.gpallab726.workers.dev";
 
         searchForm.addEventListener("submit", async function(event) {
@@ -222,74 +255,70 @@
             const query = searchInput.value.trim();
             if (!query) return;
 
-            displayArea.innerHTML = `
-                <div class="state-box">
-                    অনুসন্ধান ও AI Overview তৈরি করা হচ্ছে...
+            resultsArea.innerHTML = `
+                <div class="status-message">
+                    Synthesizing AI Overview & retrieving results...
                 </div>
             `;
 
             try {
                 const response = await fetch(`${BACKEND_URL}/?q=${encodeURIComponent(query)}`);
                 const data = await response.json();
-                renderAll(query, data);
+                renderResults(query, data);
             } catch (error) {
-                displayArea.innerHTML = `
-                    <div class="state-box" style="color: #f87171; border-color: #ef4444;">
-                        ব্যাকএন্ডের সাথে সংযোগ স্থাপন করা যায়নি।
+                resultsArea.innerHTML = `
+                    <div class="status-message" style="color: #f28b82;">
+                        Failed to connect to backend server. Please verify your connection.
                     </div>
                 `;
             }
         });
 
-        function renderAll(query, data) {
-            displayArea.innerHTML = "";
+        function renderResults(query, data) {
+            resultsArea.innerHTML = "";
 
             if (!data.results || data.results.length === 0) {
-                displayArea.innerHTML = `
-                    <div class="state-box">
-                        "${query}" সম্পর্কিত কোনো তথ্য ব্যাকএন্ডে সংরক্ষিত নেই।
+                resultsArea.innerHTML = `
+                    <div class="status-message">
+                        No results found for "<b>${query}</b>".
                     </div>
                 `;
                 return;
             }
 
-            let content = "";
+            let html = "";
 
-            // Render AI Overview if generated by Cloudflare
+            // Render Google-style AI Overview Card
             if (data.aiOverview) {
-                content += `
-                    <div class="ai-card">
-                        <div class="ai-title">
+                html += `
+                    <div class="ai-overview-card">
+                        <div class="ai-badge">
                             <svg viewBox="0 0 24 24"><path d="M12 2L14.4 7.6L20 10L14.4 12.4L12 18L9.6 12.4L4 10L9.6 7.6L12 2Z"/></svg>
-                            AI Overview
+                            ${data.aiOverview.title}
                         </div>
                         <div class="ai-summary">${data.aiOverview.summary}</div>
-                        <div class="ai-highlights">
-                            ${data.aiOverview.highlights.map(item => `<div class="ai-bullet">${item}</div>`).join('')}
-                        </div>
+                        <ul class="ai-highlights">
+                            ${data.aiOverview.highlights.map(item => `<li>${item}</li>`).join("")}
+                        </ul>
                     </div>
                 `;
             }
 
             // Results Counter
-            content += `
-                <div class="meta-summary">
-                    "${query}" এর জন্য ${data.results.length} টি ফলাফল পাওয়া গেছে
-                </div>
-            `;
+            html += `<div class="results-meta">About ${data.results.length} result(s) for "${query}"</div>`;
 
             // Regular Results List
             data.results.forEach(item => {
-                content += `
-                    <div class="result-item">
-                        <h3><a href="${item.url}" target="_blank">${item.title}</a></h3>
+                html += `
+                    <div class="result-card">
+                        <a href="${item.url}" target="_blank" class="result-link">${item.title}</a>
                         <div class="result-url">${item.url}</div>
                         <p class="result-snippet">${item.snippet}</p>
                     </div>
                 `;
             });
 
-            displayArea.innerHTML = content;
+            resultsArea.innerHTML = html;
         }
     </script>
 </body>
